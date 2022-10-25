@@ -1,4 +1,4 @@
-package sorted.SelectionSort;
+package sorted.selectionSort;
 
 public class SelectionSort {
 }
