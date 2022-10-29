@@ -19,25 +19,34 @@ import java.util.Arrays;
  */
 
 public class SelectionSort {
+    // {40, 30, 20, 40, 20}
+    // {1, 2, 3}
     public static void main(String[] args) {
-        int[] unSortedArray = {2, 1, 4, 8, 7, 5, 6, 3};
-        sort(unSortedArray);
-        System.out.println(Arrays.toString(unSortedArray));
+        int[] unSortedArray = {1, 2, 3};
+        int[] countMax = new int[unSortedArray.length];
+        //  массив для хранения значения индекса максимального числа на каждой итерации
+
+        sort(unSortedArray, countMax);
+        System.out.println(Arrays.toString(unSortedArray) + " " + Arrays.toString(countMax));
     }
 
-    public static void sort(int[] digit){
+    public static void sort(int[] digit, int[] countMax){
         int size = digit.length-1; // -1 т.к. хранит длину массива, а не число с учетом 0
         // т.е. если в массиве 8 элементов, то сохранит число 8, а не 7
         int indexMax; // переменная для хранения макс индекса
+        int indexCountMax = 0; // для начала обозначения индекса массива максимального элемента на i-й фазе алгоритма.
 
-        for(int iArr = size; iArr >= 0; iArr-- ){
+        for(int iArr = 0; iArr <= size; iArr++ ){
             indexMax = iArr; //  считаем, что первый элемент максимум
-            for(int currentIndex = iArr; currentIndex > 0; currentIndex--){
-                // iArr  исключает рассматрение отсортированного элемента
-                if(digit[indexMax] < digit[currentIndex]){
+            for(int currentIndex = 0; currentIndex <= size-iArr ; currentIndex++){
+                //
+                if((digit[indexMax] < digit[currentIndex]) && ((digit[indexMax] != digit[currentIndex]))){
                     indexMax = currentIndex;
                 }
             }
+            // сохранить индекс макс значения на текущей итерации
+            countMax[indexCountMax] = indexMax;
+            indexCountMax++;
             // поменять местами элементы
             int buffer = digit[iArr];
             digit[iArr] = digit[indexMax];
