@@ -34,7 +34,7 @@ public class BubbleSortAcmp {
     }
 
     //  отсортировать пузырьком и вернуть число инверсий
-    public static int sort(int[] digit) {
+    private static int sort(int[] digit) {
         int invers = 0;
         // переменная для повторного прохождения по массиву
         boolean needIterator = true;

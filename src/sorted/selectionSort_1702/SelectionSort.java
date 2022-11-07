@@ -1,13 +1,15 @@
 package sorted.selectionSort_1702;
 // https://acmp.ru/asp/do/index.asp?main=task&id_course=1&id_section=7&id_topic=118&id_problem=726
 
+import java.io.PrintWriter;
 import java.util.Arrays;
+import java.util.Scanner;
 
 /**
  * В этой задаче вам предлагается реализовать сортировку выбором.
- *
+ * <p>
  * Задан массив целых чисел a0, a1, …, an−1. Отсортируем его следующим образом:
- *
+ * <p>
  * выберем наибольший элемент массива и поменяем его местами с последним элементом
  * (если последний и есть найденный максимум, то обмен можно не совершать),
  * исключим из рассмотрения последний элемент и если длина оставшегося участка
@@ -22,34 +24,52 @@ public class SelectionSort {
     // {40, 30, 20, 40, 20}
     // {1, 2, 3}
     public static void main(String[] args) {
-        int[] unSortedArray = {1, 2, 3};
-        int[] countMax = new int[unSortedArray.length];
-        //  массив для хранения значения индекса максимального числа на каждой итерации
 
+        // считать с файла
+        Scanner input = new Scanner(System.in);
+        // вывести в фаил
+        PrintWriter output = new PrintWriter(System.out);
+
+        int count = input.nextInt();
+        int[] unSortedArray = new int[count];
+        // считать с консольного окна
+        readInputArray(input, unSortedArray);
+
+        int[] countMax = new int[unSortedArray.length]; //  массив для хранения значения индекса максимального числа на каждой итерации
         sort(unSortedArray, countMax);
-        System.out.println(Arrays.toString(unSortedArray) + " " + Arrays.toString(countMax));
+       // System.out.println(Arrays.toString(countMax));
+
+        output.println(Arrays.toString(countMax));
+        output.flush();
     }
 
-    public static void sort(int[] digit, int[] countMax){
-        int size = digit.length-1; // -1 т.к. хранит длину массива, а не число с учетом 0
-        // т.е. если в массиве 8 элементов, то сохранит число 8, а не 7
-        int indexMax; // переменная для хранения макс индекса
-        int indexCountMax = 0; // для начала обозначения индекса массива максимального элемента на i-й фазе алгоритма.
+    //  считать в массив числа с консольного окна
+    private static void readInputArray(Scanner input, int[] digit) {
+        for (int i = 0; i < digit.length; i++)
+        {
+            digit[i] = input.nextInt();
+        }
+    }
 
-        for(int iArr = 0; iArr <= size; iArr++ ){
-            indexMax = iArr; //  считаем, что первый элемент максимум
-            for(int currentIndex = 0; currentIndex <= size-iArr ; currentIndex++){
-                //
-                if((digit[indexMax] < digit[currentIndex]) && ((digit[indexMax] != digit[currentIndex]))){
-                    indexMax = currentIndex;
+    // при поиске максимума, происходит замена макс элемента с последним
+    // не отсортированная часть массива уменьшается на 1 элемент
+    private static void sort(int[] digit, int[] countMax) {
+
+        int sizeArr = digit.length - 1; //   длина массива
+        int indexArrDigit = 0;
+        for (int i = sizeArr; i >= 0; i--) {
+            int indexMax = 0; // для сохранения значения индекса максимума
+            // если максимум встречается более 1 раза, то необходимо выбрать первый
+            for (int j = 0; j <= i; j++) {
+                if (digit[indexMax] < digit[j]) {
+                    indexMax = j; //  сохранение индкса макс элемента
                 }
             }
-            // сохранить индекс макс значения на текущей итерации
-            countMax[indexCountMax] = indexMax;
-            indexCountMax++;
-            // поменять местами элементы
-            int buffer = digit[iArr];
-            digit[iArr] = digit[indexMax];
+            // записать в массив перестановок индекс переставляемого элемента
+            countMax[indexArrDigit] = indexMax;
+            indexArrDigit++;
+            int buffer = digit[i];
+            digit[i] = digit[indexMax];
             digit[indexMax] = buffer;
         }
     }
