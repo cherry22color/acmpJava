@@ -20,7 +20,7 @@ import java.util.Scanner;
  * Если максимум встречается более одного раза, то надо всегда выбирать первый из них.
  */
 
-public class SelectionSort {
+public class SelectionSortAcmp {
     // {40, 30, 20, 40, 20}
     // {1, 2, 3}
     public static void main(String[] args) {
@@ -39,12 +39,15 @@ public class SelectionSort {
         sort(unSortedArray, countMax);
        // System.out.println(Arrays.toString(countMax));
 
-        output.println(Arrays.toString(countMax));
+        for(int num : countMax){
+            output.print(num);
+            output.print(" ");
+        }
         output.flush();
     }
 
     //  считать в массив числа с консольного окна
-    private static void readInputArray(Scanner input, int[] digit) {
+    public static void readInputArray(Scanner input, int[] digit) {
         for (int i = 0; i < digit.length; i++)
         {
             digit[i] = input.nextInt();
@@ -53,7 +56,7 @@ public class SelectionSort {
 
     // при поиске максимума, происходит замена макс элемента с последним
     // не отсортированная часть массива уменьшается на 1 элемент
-    private static void sort(int[] digit, int[] countMax) {
+    public static void sort(int[] digit, int[] countMax) {
 
         int sizeArr = digit.length - 1; //   длина массива
         int indexArrDigit = 0;
