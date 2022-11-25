@@ -1,5 +1,10 @@
 package sorted.bubbleSort_1231;
 // https://acmp.ru/asp/do/index.asp?main=task&id_course=1&id_section=7&id_topic=118&id_problem=727
+/**
+ * Задан целочисленный массив, состоящий из N элементов. Требуется посчитать число инверсий (обмена значений
+ * соседних элементов массива) в процессе сортировки элементов массива по неубыванию при использовании
+ * алгоритма сортировки «пузырьком» (BubbleSort).
+ */
 
 import java.io.PrintWriter;
 import java.util.Scanner;

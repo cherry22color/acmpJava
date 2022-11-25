@@ -4,8 +4,21 @@ import java.io.PrintWriter;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Scanner;
+// https://acmp.ru/asp/do/index.asp?main=task&id_course=1&id_section=7&id_topic=118&id_problem=728
 
-public class InsertSortAcmp {
+/**
+ * Во входном файле INPUT.TXT в первой строке записано число N (1 ≤ N ≤ 100), а в последующих
+ * N строках N моментов времени. Каждый момент времени задается 3 целыми числами
+ * - часы (от 0 до 23), минуты (от 0 до 59) и секунды (от 0 до 59).
+ * <p>
+ * 4
+ * 10 20 30
+ * 7 30 00
+ * 23 59 59
+ * 13 30 30
+ */
+
+public class SubSort {
     public static void main(String[] args) {
 
         // считать с файла
@@ -19,10 +32,16 @@ public class InsertSortAcmp {
             times[i] = new Time(input.nextInt(), input.nextInt(), input.nextInt());
         }
 
-        Arrays.sort(times, new SortSec());
+        // два варианта применения интерфейса comparator, при одном создается новый класс, при другом
+        // класс не создается
+        Arrays.sort(times, new Comparator<Time>() {
+            @Override
+            public int compare(Time t1, Time t2){
+                return t1.sec - t2.sec;
+            }
+        } );
         Arrays.sort(times, new SortMin());
         Arrays.sort(times, new SortHour());
-
 
         for (Time timeObj : times) {
             output.println(timeObj);
@@ -47,38 +66,21 @@ class Time {
     public String toString() {
         return hour + " " + min + " " + sec;
     }
-
-
 }
 
-// класс для сортиртировки по секундам
-class SortSec implements Comparator <Time> {
 
-    @Override
-    public int compare(Time time1, Time time2) {
-       int digit;
-        if(time1.sec < time2.sec){
-            digit = -1;
-        }else if(time1.sec > time2.sec){
-            digit = 1;
-        } else{
-            digit = 0;
-        }
-        return digit;
-    }
-}
 
 // класс для сортировки по минутам
-class SortMin implements Comparator<Time>{
+class SortMin implements Comparator<Time> {
 
     @Override
     public int compare(Time time1, Time time2) {
         int digit;
-        if(time1.min < time2.min){
+        if (time1.min < time2.min) {
             digit = -1;
-        }else if(time1.min > time2.min){
+        } else if (time1.min > time2.min) {
             digit = 1;
-        } else{
+        } else {
             digit = 0;
         }
         return digit;
@@ -86,16 +88,16 @@ class SortMin implements Comparator<Time>{
 }
 
 // класс для сортировки по часам
-class SortHour implements Comparator<Time>{
+class SortHour implements Comparator<Time> {
 
     @Override
     public int compare(Time time1, Time time2) {
         int digit;
-        if(time1.hour < time2.hour){
+        if (time1.hour < time2.hour) {
             digit = -1;
-        }else if(time1.hour > time2.hour){
+        } else if (time1.hour > time2.hour) {
             digit = 1;
-        } else{
+        } else {
             digit = 0;
         }
         return digit;
