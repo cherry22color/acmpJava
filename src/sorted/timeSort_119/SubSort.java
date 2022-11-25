@@ -1,9 +1,7 @@
 package sorted.timeSort_119;
 
 import java.io.PrintWriter;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.Scanner;
+import java.util.*;
 // https://acmp.ru/asp/do/index.asp?main=task&id_course=1&id_section=7&id_topic=118&id_problem=728
 
 /**
@@ -26,22 +24,16 @@ public class SubSort {
         // вывести в фаил
         PrintWriter output = new PrintWriter(System.out);
         int sizeArr = input.nextInt(); // размер массива
-        Time[] times = new Time[sizeArr];
+        ArrayList<Time> times = new ArrayList<Time>();
 
-        for (int i = 0; i < times.length; i++) {
-            times[i] = new Time(input.nextInt(), input.nextInt(), input.nextInt());
+        for (int i = 0; i < sizeArr; i++) {
+            times.add(new Time(input.nextInt(), input.nextInt(), input.nextInt()));
         }
 
-        // два варианта применения интерфейса comparator, при одном создается новый класс, при другом
-        // класс не создается
-        Arrays.sort(times, new Comparator<Time>() {
-            @Override
-            public int compare(Time t1, Time t2){
-                return t1.sec - t2.sec;
-            }
-        } );
-        Arrays.sort(times, new SortMin());
-        Arrays.sort(times, new SortHour());
+        // Сортировка коллекции по нескольким полям с использованием лямбда выражений
+        Collections.sort(times, Comparator.comparing(Time::getSec)
+                .thenComparing(Time::getMin)
+                .thenComparing(Time::getHour));
 
         for (Time timeObj : times) {
             output.println(timeObj);
@@ -62,13 +54,23 @@ class Time {
         this.hour = hour;
     }
 
+    public int getSec() {
+        return sec;
+    }
+
+    public int getMin() {
+        return min;
+    }
+
+    public int getHour() {
+        return hour;
+    }
+
     @Override
     public String toString() {
         return hour + " " + min + " " + sec;
     }
 }
-
-
 
 // класс для сортировки по минутам
 class SortMin implements Comparator<Time> {
