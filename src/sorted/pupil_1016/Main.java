@@ -15,9 +15,7 @@ package sorted.pupil_1016;
  */
 
 import java.io.PrintWriter;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.Scanner;
+import java.util.*;
 
 public class Main {
     public static void main(String[] args) {
@@ -27,17 +25,22 @@ public class Main {
         PrintWriter output = new PrintWriter(System.out);
         int count = input.nextInt();
 
-        final Pupil[] pupil = new Pupil[count];
+        ArrayList<Pupil> pupils = new ArrayList<Pupil>();
         // readInpurArray(input, pupil);
-        for (int i = 0; i < pupil.length; i++) {
-            pupil[i] = new Pupil(input.next(), input.next(), input.next(), input.next());
+        for (int i = 0; i < count; i++) {
+            pupils.add(new Pupil(input.next(), input.next(), input.next(), input.next()));
         }
 
-        compareObject(pupil);
+        Collections.sort(pupils, Comparator.comparing(Pupil::getNumberClass)
+                .thenComparing(Pupil::getNameClass)
+                .thenComparing(Pupil::getLastname));
 
-        for (Pupil pupilObject : pupil) {
-            output.println(pupilObject.classroom + " " + pupilObject.lastname + " " + pupilObject.name + " " +
-                    pupilObject.date);
+        //compareObject(pupil);
+
+        // Для вывода информации по объекту используется его внутренний метод
+        // toString()
+        for (Pupil pupilObject : pupils) {
+            output.println(pupilObject);
         }
         output.flush();
     }
@@ -101,6 +104,25 @@ class Pupil {
         day = Integer.parseInt(dateArr[0]);
         month = Integer.parseInt(dateArr[1]);
         year = Integer.parseInt(dateArr[2]);
+    }
+
+    public String getLastname() {
+        return lastname;
+    }
+
+    public String getNameClass() {
+        return nameClass;
+    }
+
+    public int getNumberClass() {
+        return numberClass;
+    }
+
+    // Каждый раз, когда вызывается функция print для объекта класса,
+    // используется эта функция
+    @Override
+    public String toString() {
+        return classroom + " " + lastname + " " + name + " " + date;
     }
 }
 
