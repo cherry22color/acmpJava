@@ -31,9 +31,9 @@ public class SubSort {
         }
 
         // Сортировка коллекции по нескольким полям с использованием лямбда выражений
-        Collections.sort(times, Comparator.comparing(Time::getSec)
+        Collections.sort(times, Comparator.comparing(Time::getHour)
                 .thenComparing(Time::getMin)
-                .thenComparing(Time::getHour));
+                .thenComparing(Time::getSec));
 
         for (Time timeObj : times) {
             output.println(timeObj);
